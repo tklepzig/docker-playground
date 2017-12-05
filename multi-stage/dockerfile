@@ -1,0 +1,9 @@
+FROM alpine as builder
+COPY . /app
+WORKDIR /app
+RUN cp src dist && echo " aus dist" >> dist
+
+FROM alpine
+COPY --from=builder /app/dist /app/
+WORKDIR /app
+CMD cat dist
