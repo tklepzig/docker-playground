@@ -1,7 +1,12 @@
+#set default *before* FROM
+ARG user=noname
 FROM alpine as builder
+#declare it for usage *after* FROM
+#see also https://docs.docker.com/engine/reference/builder/#arg
+ARG user
 COPY . /app
 WORKDIR /app
-RUN cp src dist && echo " aus dist" >> dist
+RUN cp src dist && echo " from dist by $user" >> dist
 
 FROM alpine
 COPY --from=builder /app/dist /app/
